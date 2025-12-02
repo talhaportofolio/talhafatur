@@ -557,42 +557,53 @@ const ExpertiseCard = ({ icon, title, desc, tags }) => (
   </div>
 );
 
-const ProjectCard = ({ title, category, image, desc, stack }) => (
-  <div className="group relative rounded-xl overflow-hidden bg-white/5 backdrop-blur-md border border-white/10 hover:border-cyan-500/50 transition-all md:cursor-none h-[350px] md:h-[400px]">
-    <div className="relative h-full w-full">
-      <img 
-        src={image} 
-        alt={title} 
-        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/70 to-transparent opacity-90 transition-opacity duration-500 group-hover:opacity-100"></div>
+const ProjectCard = ({ title, category, image, desc, stack }) => {
+  const [isTouched, setIsTouched] = useState(false);
 
-      <div className="absolute top-4 left-4">
-        <span className="px-3 py-1 text-[10px] md:text-xs font-bold font-mono text-cyan-400 bg-cyan-900/30 border border-cyan-500/30 rounded-full uppercase tracking-wider backdrop-blur-sm">
-          {category}
-        </span>
-      </div>
+  const handleTouch = () => {
+    setIsTouched(!isTouched);
+  };
 
-      <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 border border-white/10">
-        <ExternalLink size={18} className="text-white" />
-      </div>
+  return (
+    <div 
+      onClick={handleTouch}
+      className={`group relative rounded-xl overflow-hidden bg-white/5 backdrop-blur-md border border-white/10 hover:border-cyan-500/50 transition-all md:cursor-none h-[350px] md:h-[400px] ${isTouched ? 'border-cyan-500/50' : ''}`}
+    >
+      <div className="relative h-full w-full">
+        <img 
+          src={image} 
+          alt={title} 
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/70 to-transparent opacity-90 transition-opacity duration-500 group-hover:opacity-100"></div>
 
-      <div className="absolute bottom-0 left-0 p-6 md:p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-        <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 md:mb-3 leading-tight">{title}</h3>
-        <p className="text-slate-300 text-sm mb-4 md:mb-6 line-clamp-3 group-hover:line-clamp-none transition-all duration-500 opacity-80 group-hover:opacity-100">
-          {desc}
-        </p>
-        <div className="flex flex-wrap gap-2 md:gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-           {stack && stack.map((tech, i) => (
-             <span key={i} className="text-[10px] md:text-xs text-cyan-300 font-mono bg-cyan-900/20 px-2 py-1 rounded border border-cyan-500/20">
-               #{tech}
-             </span>
-           ))}
+        <div className="absolute top-4 left-4">
+          <span className="px-3 py-1 text-[10px] md:text-xs font-bold font-mono text-cyan-400 bg-cyan-900/30 border border-cyan-500/30 rounded-full uppercase tracking-wider backdrop-blur-sm">
+            {category}
+          </span>
+        </div>
+
+        <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 border border-white/10">
+          <ExternalLink size={18} className="text-white" />
+        </div>
+
+        <div className={`absolute bottom-0 left-0 p-6 md:p-8 w-full transform transition-transform duration-500 ${isTouched ? 'translate-y-0' : 'translate-y-4 group-hover:translate-y-0'}`}>
+          <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 md:mb-3 leading-tight">{title}</h3>
+          <p className={`text-slate-300 text-sm mb-4 md:mb-6 transition-all duration-500 ${isTouched ? 'line-clamp-none opacity-100' : 'line-clamp-3 opacity-80 group-hover:line-clamp-none group-hover:opacity-100'}`}>
+            {desc}
+          </p>
+          <div className={`flex flex-wrap gap-2 md:gap-3 transition-opacity duration-500 delay-100 ${isTouched ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+             {stack && stack.map((tech, i) => (
+               <span key={i} className="text-[10px] md:text-xs text-cyan-300 font-mono bg-cyan-900/20 px-2 py-1 rounded border border-cyan-500/20">
+                 #{tech}
+               </span>
+             ))}
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const ExperienceItem = ({ role, company, period, desc, skills, location, isOpen, onToggle }) => {
   return (
