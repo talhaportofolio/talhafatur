@@ -105,13 +105,13 @@ const Portfolio = () => {
     setSoftSkills(_softSkills);
   };
   
-  // Data Navigasi dengan Ikon untuk Mobile
+  // Data Navigasi dengan Ikon untuk Mobile (Ukuran icon diperkecil ke 18 agar lebih compact)
   const navItems = [
-    { id: 'home', label: 'home', number: '01', icon: <Home size={20} /> },
-    { id: 'expertise', label: 'expertise', number: '02', icon: <User size={20} /> },
-    { id: 'project', label: 'project', number: '03', icon: <Briefcase size={20} /> },
-    { id: 'experience', label: 'experience', number: '04', icon: <Award size={20} /> },
-    { id: 'contact', label: 'contact', number: '05', icon: <MessageSquare size={20} /> },
+    { id: 'home', label: 'home', number: '01', icon: <Home size={18} /> },
+    { id: 'expertise', label: 'expertise', number: '02', icon: <User size={18} /> },
+    { id: 'project', label: 'project', number: '03', icon: <Briefcase size={18} /> },
+    { id: 'experience', label: 'experience', number: '04', icon: <Award size={18} /> },
+    { id: 'contact', label: 'contact', number: '05', icon: <MessageSquare size={18} /> },
   ];
 
   const projects = [
@@ -272,7 +272,7 @@ const Portfolio = () => {
 
   return (
     // Tambahkan 'md:cursor-none' agar cursor custom hanya di desktop
-    <div className="bg-[#0a0a0a] min-h-screen text-slate-300 font-sans selection:bg-cyan-500/30 selection:text-cyan-200 md:cursor-none pb-20 md:pb-0">
+    <div className="bg-[#0a0a0a] min-h-screen text-slate-300 font-sans selection:bg-cyan-500/30 selection:text-cyan-200 md:cursor-none pb-24 md:pb-0">
       <CustomCursor />
 
       {/* --- DESKTOP NAVBAR (TOP) --- */}
@@ -301,21 +301,25 @@ const Portfolio = () => {
         </div>
       </nav>
 
-      {/* --- MOBILE NAVBAR (BOTTOM) --- */}
-      <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-t border-white/10 px-6 py-4 safe-area-bottom">
-        <ul className="flex justify-between items-center">
+      {/* --- MOBILE NAVBAR (FLOATING BOTTOM) --- */}
+      {/* Diubah menjadi fixed floating dengan rounded corners dan margin dari bawah */}
+      <nav className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-[360px] z-50 bg-[#121212]/80 backdrop-blur-xl border border-white/10 rounded-2xl px-4 py-3 shadow-2xl shadow-black/50 safe-area-bottom">
+        <ul className="flex justify-between items-center px-1">
           {navItems.map((item) => (
             <li key={item.id}>
               <button
                 onClick={() => scrollToSection(item.id)}
-                className={`flex flex-col items-center gap-1 transition-all duration-300
-                  ${activeSection === item.id ? 'text-cyan-400' : 'text-slate-500'}
+                className={`flex flex-col items-center gap-1 transition-all duration-300 active:scale-95
+                  ${activeSection === item.id ? 'text-cyan-400' : 'text-slate-500 hover:text-slate-300'}
                 `}
               >
-                <div className={`p-2 rounded-full transition-all ${activeSection === item.id ? 'bg-cyan-400/10' : 'bg-transparent'}`}>
+                <div className={`p-2 rounded-full transition-all duration-300 ${activeSection === item.id ? 'bg-cyan-400/10 -translate-y-1' : 'bg-transparent'}`}>
                   {item.icon}
                 </div>
-                <span className="text-[10px] uppercase font-medium tracking-wide">{item.label}</span>
+                {/* Teks label kecil opsional, bisa dihapus jika ingin lebih minimalis */}
+                <span className={`text-[9px] uppercase font-bold tracking-wider transition-opacity duration-300 ${activeSection === item.id ? 'opacity-100' : 'opacity-70'}`}>
+                  {item.label}
+                </span>
               </button>
             </li>
           ))}
