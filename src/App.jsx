@@ -340,7 +340,7 @@ const Portfolio = () => {
           </h1>
           
           <p className="text-base md:text-2xl text-slate-400 max-w-3xl mx-auto font-light leading-relaxed mb-8 md:mb-10 px-2">
-            Engineering student with strong expertise in <span className="text-slate-100 font-medium border-b border-cyan-500/50">Industrial Automation</span>, <span className="text-slate-100 font-medium border-b border-cyan-500/50">IoT Solutions</span>, and <span className="text-slate-100 font-medium border-b border-cyan-500/50">Web Developer</span>.
+            Engineering student with strong expertise in <span className="text-slate-100 font-medium border-b border-cyan-500/50">Industrial Automation Engineer</span>, <span className="text-slate-100 font-medium border-b border-cyan-500/50">IoT Engineer</span>, and <span className="text-slate-100 font-medium border-b border-cyan-500/50">Web Developer</span>.
           </p>
           
           <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6">
@@ -386,13 +386,13 @@ const Portfolio = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mt-8 md:mt-12 mb-12 md:mb-16">
             <ExpertiseCard 
               icon={<Factory size={32} className="text-cyan-400" />}
-              title="Industrial Automation"
+              title="Industrial Automation Engineer"
               tags={['Omron', 'Siemens', 'Hydraulic', 'Pneumatic']}
               desc="Designing efficient control systems and industrial workflows using advanced PLC ladder logic and fluid power circuits."
             />
             <ExpertiseCard 
               icon={<Cpu size={32} className="text-green-400" />}
-              title="IoT Solutions"
+              title="IoT Engineer"
               tags={['ESP32', 'Arduino', 'MQTT', 'Grafana']}
               desc="Bridging the gap between hardware and software. Developing smart monitoring systems and automation."
             />
