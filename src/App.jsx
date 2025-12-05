@@ -497,34 +497,6 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* --- LINKEDIN BANNER GENERATOR (Bonus Feature) --- */}
-      <section className="py-20 bg-black flex flex-col items-center border-t border-white/5">
-        <h3 className="text-slate-500 font-mono text-xs mb-4 uppercase tracking-widest flex items-center gap-2">
-          <Camera size={14} />
-          LinkedIn Banner Generator
-        </h3>
-        <div className="w-full max-w-[1584px] aspect-[4/1] bg-[#0a0a0a] relative overflow-hidden flex flex-col justify-center items-center border border-white/10 group select-none">
-           {/* Abstract Background for Banner */}
-           <div className="absolute top-[-50%] left-[-10%] w-[50%] h-[150%] bg-purple-900/20 rounded-full blur-[120px]"></div>
-           <div className="absolute bottom-[-50%] right-[-10%] w-[50%] h-[150%] bg-cyan-900/20 rounded-full blur-[120px]"></div>
-           <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
-           
-           <div className="z-10 text-center scale-75 md:scale-100">
-              <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter mb-2">
-                TALHA FATUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">RAHMAN</span>
-              </h1>
-              <p className="text-slate-400 font-mono text-sm md:text-xl tracking-[0.2em] uppercase">
-                Engineering Student & Web Developer
-              </p>
-           </div>
-           
-           <div className="absolute bottom-6 right-8 opacity-30">
-              <Terminal size={24} className="text-white" />
-           </div>
-        </div>
-        <p className="mt-4 text-slate-600 text-xs">Screenshot area di atas untuk banner LinkedIn (1584x396px)</p>
-      </section>
-
       {/* Footer */}
       <footer className="py-6 text-center border-t border-white/5 pb-24 md:pb-6 bg-[#0a0a0a]">
          <p className="text-slate-600 text-xs font-mono px-4">
