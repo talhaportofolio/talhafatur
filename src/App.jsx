@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   Github, 
   Linkedin, 
-  Instagram, 
   Mail, 
   Layout, 
   ExternalLink, 
@@ -16,26 +15,24 @@ import {
   Globe,
   FileText, 
   Sparkles,
-  Home,       // Icon untuk Home
-  User,       // Icon untuk Expertise
-  Briefcase,  // Icon untuk Project
-  Award,      // Icon untuk Experience
-  MessageSquare // Icon untuk Contact
+  Home,       
+  User,       
+  Briefcase,  
+  Award,      
+  MessageSquare,
+  Download,
+  Camera 
 } from 'lucide-react';
 
 // --- CUSTOM CURSOR COMPONENT (Hidden on Mobile) ---
 const CustomCursor = () => {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
-  const requestRef = useRef(null);
   
-  // Posisi target (mouse)
   const cursorRef = useRef({ x: 0, y: 0 });
-  // Posisi saat ini (untuk ring yang delay)
   const ringPos = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    // Cek apakah device touch screen
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     if (isTouchDevice) return;
 
@@ -56,19 +53,18 @@ const CustomCursor = () => {
       if (ringRef.current) {
         ringRef.current.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0)`;
       }
-      requestRef.current = requestAnimationFrame(animateRing);
+      requestAnimationFrame(animateRing);
     };
 
-    requestRef.current = requestAnimationFrame(animateRing);
+    requestAnimationFrame(animateRing);
 
     return () => {
       window.removeEventListener("mousemove", onMouseMove);
-      cancelAnimationFrame(requestRef.current);
     };
   }, []);
 
   return (
-    <div className="hidden md:block"> {/* Hanya muncul di desktop */}
+    <div className="hidden md:block"> 
       <div 
         ref={ringRef}
         className="fixed top-0 left-0 w-10 h-10 border border-[#0affff] rounded-full pointer-events-none z-[9999] mix-blend-difference -ml-5 -mt-5" 
@@ -86,13 +82,11 @@ const Portfolio = () => {
   const [scrolled, setScrolled] = useState(false);
   const [openExperienceIndex, setOpenExperienceIndex] = useState(0); 
 
-  // State untuk Soft Skills
   const [softSkills, setSoftSkills] = useState([
     "Problem Solving", "Critical Thinking", "Communication Skills", 
     "Time Management", "Leadership", "Creativity & Innovation"
   ]);
 
-  // Drag & Drop References
   const dragItem = useRef(null);
   const dragOverItem = useRef(null);
 
@@ -105,13 +99,12 @@ const Portfolio = () => {
     setSoftSkills(_softSkills);
   };
   
-  // Data Navigasi dengan Ikon untuk Mobile (Ukuran icon diperkecil ke 18 agar lebih compact)
   const navItems = [
-    { id: 'home', label: 'home', number: '01', icon: <Home size={18} /> },
-    { id: 'expertise', label: 'expertise', number: '02', icon: <User size={18} /> },
-    { id: 'project', label: 'project', number: '03', icon: <Briefcase size={18} /> },
-    { id: 'experience', label: 'experience', number: '04', icon: <Award size={18} /> },
-    { id: 'contact', label: 'contact', number: '05', icon: <MessageSquare size={18} /> },
+    { id: 'home', label: 'home', number: '01', icon: <Home size={20} /> },
+    { id: 'expertise', label: 'expertise', number: '02', icon: <User size={20} /> },
+    { id: 'project', label: 'project', number: '03', icon: <Briefcase size={20} /> },
+    { id: 'experience', label: 'experience', number: '04', icon: <Award size={20} /> },
+    { id: 'contact', label: 'contact', number: '05', icon: <MessageSquare size={20} /> },
   ];
 
   const projects = [
@@ -237,7 +230,6 @@ const Portfolio = () => {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
-      // Logic deteksi section aktif
       const scrollPosition = window.scrollY + window.innerHeight / 2;
       navItems.forEach(item => {
         const section = document.getElementById(item.id);
@@ -271,11 +263,10 @@ const Portfolio = () => {
   };
 
   return (
-    // Tambahkan 'md:cursor-none' agar cursor custom hanya di desktop
     <div className="bg-[#0a0a0a] min-h-screen text-slate-300 font-sans selection:bg-cyan-500/30 selection:text-cyan-200 md:cursor-none pb-24 md:pb-0">
       <CustomCursor />
 
-      {/* --- DESKTOP NAVBAR (TOP) --- */}
+      {/* --- DESKTOP NAVBAR --- */}
       <nav className={`hidden md:block fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#0a0a0a]/90 backdrop-blur-md py-4 shadow-2xl border-b border-white/5' : 'py-8 bg-transparent'}`}>
         <div className="max-w-6xl mx-auto px-6 flex justify-center items-center">
           <ul className="flex items-center space-x-10">
@@ -301,23 +292,21 @@ const Portfolio = () => {
         </div>
       </nav>
 
-      {/* --- MOBILE NAVBAR (FLOATING BOTTOM) --- */}
-      {/* Diubah menjadi fixed floating dengan rounded corners dan margin dari bawah */}
-      <nav className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-[360px] z-50 bg-[#121212]/80 backdrop-blur-xl border border-white/10 rounded-2xl px-4 py-3 shadow-2xl shadow-black/50 safe-area-bottom">
-        <ul className="flex justify-between items-center px-1">
+      {/* --- MOBILE NAVBAR (FIXED BOTTOM) --- */}
+      <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-[#0a0a0a]/90 backdrop-blur-lg border-t border-white/10 px-6 py-2 safe-area-bottom shadow-[0_-5px_20px_rgba(0,0,0,0.5)]">
+        <ul className="flex justify-around items-center">
           {navItems.map((item) => (
             <li key={item.id}>
               <button
                 onClick={() => scrollToSection(item.id)}
-                className={`flex flex-col items-center gap-1 transition-all duration-300 active:scale-95
+                className={`flex flex-col items-center gap-1 transition-all duration-300 p-2 active:scale-90
                   ${activeSection === item.id ? 'text-cyan-400' : 'text-slate-500 hover:text-slate-300'}
                 `}
               >
-                <div className={`p-2 rounded-full transition-all duration-300 ${activeSection === item.id ? 'bg-cyan-400/10 -translate-y-1' : 'bg-transparent'}`}>
+                <div className={`transition-all duration-300 ${activeSection === item.id ? '-translate-y-1' : ''}`}>
                   {item.icon}
                 </div>
-                {/* Teks label kecil opsional, bisa dihapus jika ingin lebih minimalis */}
-                <span className={`text-[9px] uppercase font-bold tracking-wider transition-opacity duration-300 ${activeSection === item.id ? 'opacity-100' : 'opacity-70'}`}>
+                <span className={`text-[9px] uppercase font-bold tracking-wider transition-opacity duration-300 ${activeSection === item.id ? 'opacity-100' : 'opacity-60'}`}>
                   {item.label}
                 </span>
               </button>
@@ -334,20 +323,18 @@ const Portfolio = () => {
         <div className="text-center z-10 relative max-w-4xl mx-auto mt-0 md:mt-16">
           <p className="text-cyan-400 font-mono mb-4 md:mb-6 tracking-widest text-xs md:text-base animate-fade-in">HELLO, I AM</p>
           
-          {/* Responsive Font Size: Smaller on mobile, larger on desktop */}
           <h1 className="text-4xl md:text-7xl lg:text-8xl font-black text-slate-100 tracking-tighter mb-6 md:mb-8 leading-tight">
             TALHA FATUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 block md:inline">RAHMAN</span>
           </h1>
           
           <p className="text-base md:text-2xl text-slate-400 max-w-3xl mx-auto font-light leading-relaxed mb-8 md:mb-10 px-2">
-            Engineering student with strong expertise in <span className="text-slate-100 font-medium border-b border-cyan-500/50">Automation Engineer</span>, <span className="text-slate-100 font-medium border-b border-cyan-500/50">IoT Engineer</span>, and <span className="text-slate-100 font-medium border-b border-cyan-500/50">Web Developer</span>.
+            Engineering student with strong expertise in <span className="text-slate-100 font-medium border-b border-cyan-500/50">Industrial Automation</span>, <span className="text-slate-100 font-medium border-b border-cyan-500/50">IoT Solutions</span>, and <span className="text-slate-100 font-medium border-b border-cyan-500/50">Web Developer</span>.
           </p>
           
           <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6">
             <div className="flex gap-6 items-center mb-4 md:mb-0">
               <SocialIcon icon={<Github size={20} />} href="https://github.com/talhaportofolio" />
               <SocialIcon icon={<Linkedin size={20} />} href="https://www.linkedin.com/in/talha-fatur-rahman" />
-              <SocialIcon icon={<Instagram size={20} />} href="https://instagram.com/talhafatur" />
               <SocialIcon icon={<Mail size={20} />} href="mailto:talhafaturjob@gmail.com" />
             </div>
             
@@ -355,7 +342,9 @@ const Portfolio = () => {
             
             <div className="flex gap-3">
                <a 
-                href="#" 
+                href="https://drive.google.com/drive/folders/1kGMWo7l9_kTWu37M4ptOj1I0UbM-U7a4?usp=sharing" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group flex items-center gap-2 text-slate-300 border border-slate-700 px-5 py-2.5 rounded-full hover:bg-slate-800 transition-all duration-300 md:cursor-none text-sm"
               >
                 <FileText size={16} />
@@ -371,11 +360,6 @@ const Portfolio = () => {
             </div>
           </div>
         </div>
-        
-        {/* Scroll Indicator - Hidden on Mobile */}
-        <div className="hidden md:block absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-slate-600">
-           <div className="w-[1px] h-12 bg-gradient-to-b from-transparent via-slate-500 to-transparent"></div>
-        </div>
       </section>
 
       {/* --- EXPERTISE SECTION --- */}
@@ -386,13 +370,13 @@ const Portfolio = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mt-8 md:mt-12 mb-12 md:mb-16">
             <ExpertiseCard 
               icon={<Factory size={32} className="text-cyan-400" />}
-              title="Automation Engineer"
+              title="Industrial Automation"
               tags={['Omron', 'Siemens', 'Hydraulic', 'Pneumatic']}
               desc="Designing efficient control systems and industrial workflows using advanced PLC ladder logic and fluid power circuits."
             />
             <ExpertiseCard 
               icon={<Cpu size={32} className="text-green-400" />}
-              title="IoT Engineer"
+              title="IoT Solutions"
               tags={['ESP32', 'Arduino', 'MQTT', 'Grafana']}
               desc="Bridging the gap between hardware and software. Developing smart monitoring systems and automation."
             />
@@ -404,7 +388,7 @@ const Portfolio = () => {
             />
           </div>
 
-          {/* --- SOFT SKILLS SECTION --- */}
+          {/* --- SOFT SKILLS --- */}
           <div className="mt-8">
             <div className="flex items-center gap-3 mb-6 md:mb-8 justify-center">
               <Sparkles size={20} className="text-purple-400" />
@@ -493,7 +477,7 @@ const Portfolio = () => {
               <Mail size={20} />
               talhafaturjob@gmail.com
             </a>
-            <a href="#" className="w-full md:w-auto flex justify-center items-center gap-3 border border-slate-700 text-white px-8 py-4 rounded-full font-bold hover:bg-slate-800 transition-all duration-300 md:cursor-none">
+            <a href="https://drive.google.com/drive/folders/1kGMWo7l9_kTWu37M4ptOj1I0UbM-U7a4?usp=sharing" target="_blank" rel="noopener noreferrer" className="w-full md:w-auto flex justify-center items-center gap-3 border border-slate-700 text-white px-8 py-4 rounded-full font-bold hover:bg-slate-800 transition-all duration-300 md:cursor-none">
               <FileText size={20} />
               Download CV
             </a>
@@ -505,8 +489,7 @@ const Portfolio = () => {
                <div className="flex md:block gap-6 justify-center">
                  <ul className="flex md:flex-col gap-6 md:gap-2 text-slate-500 text-sm">
                    <li className="hover:text-cyan-400 md:cursor-none"><a href="https://github.com/talhaportofolio">Github</a></li>
-                   <li className="hover:text-cyan-400 md:cursor-none"><a href="https://instagram.com/talhafatur">Instagram</a></li>
-                   <li className="hover:text-cyan-400 md:cursor-none">Twitter</li>
+                   <li className="hover:text-cyan-400 md:cursor-none"><a href="https://www.linkedin.com/in/talha-fatur-rahman">LinkedIn</a></li>
                  </ul>
                </div>
              </div>
@@ -514,7 +497,35 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* Footer - Adjusted for Mobile Bottom Nav */}
+      {/* --- LINKEDIN BANNER GENERATOR (Bonus Feature) --- */}
+      <section className="py-20 bg-black flex flex-col items-center border-t border-white/5">
+        <h3 className="text-slate-500 font-mono text-xs mb-4 uppercase tracking-widest flex items-center gap-2">
+          <Camera size={14} />
+          LinkedIn Banner Generator
+        </h3>
+        <div className="w-full max-w-[1584px] aspect-[4/1] bg-[#0a0a0a] relative overflow-hidden flex flex-col justify-center items-center border border-white/10 group select-none">
+           {/* Abstract Background for Banner */}
+           <div className="absolute top-[-50%] left-[-10%] w-[50%] h-[150%] bg-purple-900/20 rounded-full blur-[120px]"></div>
+           <div className="absolute bottom-[-50%] right-[-10%] w-[50%] h-[150%] bg-cyan-900/20 rounded-full blur-[120px]"></div>
+           <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+           
+           <div className="z-10 text-center scale-75 md:scale-100">
+              <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter mb-2">
+                TALHA FATUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">RAHMAN</span>
+              </h1>
+              <p className="text-slate-400 font-mono text-sm md:text-xl tracking-[0.2em] uppercase">
+                Engineering Student & Web Developer
+              </p>
+           </div>
+           
+           <div className="absolute bottom-6 right-8 opacity-30">
+              <Terminal size={24} className="text-white" />
+           </div>
+        </div>
+        <p className="mt-4 text-slate-600 text-xs">Screenshot area di atas untuk banner LinkedIn (1584x396px)</p>
+      </section>
+
+      {/* Footer */}
       <footer className="py-6 text-center border-t border-white/5 pb-24 md:pb-6 bg-[#0a0a0a]">
          <p className="text-slate-600 text-xs font-mono px-4">
            DESIGNED & BUILT BY TALHA FATUR © 2025
@@ -524,7 +535,7 @@ const Portfolio = () => {
   );
 };
 
-// --- Sub-Components (Responsive Adjustments) ---
+// --- Sub-Components ---
 
 const SocialIcon = ({ icon, href }) => (
   <a href={href} className="text-slate-400 hover:text-white hover:bg-white/10 p-2 rounded-full transition-all duration-300 border border-transparent hover:border-white/10 md:cursor-none">
